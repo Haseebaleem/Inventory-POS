@@ -7,6 +7,7 @@ import RoleRedirect from '@/pages/RoleRedirect';
 import PlaceholderPage from '@/pages/PlaceholderPage';
 import CategoriesPage from '@/pages/CategoriesPage';
 import StaffPage from '@/pages/StaffPage';
+import BusinessPage from '@/pages/BusinessPage';
 import TopProgressBar from '@/components/TopProgressBar';
 import SplashScreen from '@/components/SplashScreen';
 import { useAuthBootstrap } from '@/hooks/useAuthBootstrap';
@@ -87,7 +88,7 @@ export default function App() {
               path="/business"
               element={
                 <RequireAuth roles={['OWNER']}>
-                  <PlaceholderPage title="Business Settings" />
+                  <BusinessPage />
                 </RequireAuth>
               }
             />
