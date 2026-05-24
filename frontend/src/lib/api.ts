@@ -8,6 +8,15 @@ export const api = axios.create({
   withCredentials: true,
 });
 
+// Strip /api/v1 (or whatever the api suffix is) to get the origin that serves /uploads/*
+export const apiOrigin = baseURL.replace(/\/api\/v\d+\/?$/, '');
+
+export function resolveAsset(path: string | null | undefined): string | undefined {
+  if (!path) return undefined;
+  if (/^https?:\/\//.test(path)) return path;
+  return `${apiOrigin}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('auth.token');
   if (token) {
