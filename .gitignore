@@ -1,3 +1,7 @@
+# Uploads (runtime artefacts; not committed)
+backend/uploads/products/*
+!backend/uploads/products/.gitkeep
+
 # Logs
 logs
 *.log
