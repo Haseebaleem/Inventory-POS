@@ -447,12 +447,7 @@ Senior Full Stack Developer & Team Lead
 - 💼 **LinkedIn:** [linkedin.com/in/haseeb-aleem-dev](https://www.linkedin.com/in/haseeb-aleem-dev/)
 - 💻 **GitHub:** [github.com/Haseebaleem](https://github.com/Haseebaleem)
 - 📧 **Email:** haseebaleem2802@gmail.com
-- 📍 **Location:** Multan, Pakistan (Open to Saudi Arabia & GCC relocation)
-
-### Related Portfolio Projects
-- 🔐 [**Auth-Boilerplate**](https://github.com/Haseebaleem/Auth-Boilerplate) — Production-ready Node.js authentication starter with refresh-token rotation
-- 📋 [**Task-Manager**](https://github.com/Haseebaleem/Task-Manager) — Real-time collaborative kanban board with full audit trail
-- 🛒 [**Marketplace**](https://github.com/Haseebaleem/Marketplace) — Multi-vendor e-commerce platform (in active development)
+- 📍 **Location:** Multan, Pakistan
 
 ---
 
