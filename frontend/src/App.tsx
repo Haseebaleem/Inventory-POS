@@ -12,6 +12,8 @@ import ProductsPage from '@/pages/ProductsPage';
 import ProductNewPage from '@/pages/ProductNewPage';
 import ProductDetailPage from '@/pages/ProductDetailPage';
 import AuditLogsPage from '@/pages/AuditLogsPage';
+import SalesPage from '@/pages/SalesPage';
+import SaleDetailPage from '@/pages/SaleDetailPage';
 import TopProgressBar from '@/components/TopProgressBar';
 import SplashScreen from '@/components/SplashScreen';
 import { useAuthBootstrap } from '@/hooks/useAuthBootstrap';
@@ -96,8 +98,8 @@ export default function App() {
                 </RequireAuth>
               }
             />
-            <Route path="/sales" element={<PlaceholderPage title="Sales History" />} />
-            <Route path="/sales/:id" element={<PlaceholderPage title="Sale Detail" />} />
+            <Route path="/sales" element={<SalesPage />} />
+            <Route path="/sales/:id" element={<SaleDetailPage />} />
             <Route
               path="/audit-logs"
               element={

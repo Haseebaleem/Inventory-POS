@@ -9,9 +9,10 @@ export interface StaffMember extends AuthUser {
 
 const KEY = ['staff'] as const;
 
-export function useStaff() {
+export function useStaff(options: { enabled?: boolean } = {}) {
   return useQuery({
     queryKey: KEY,
+    enabled: options.enabled ?? true,
     queryFn: async () => {
       const { data } = await api.get<{ staff: StaffMember[] }>('/admin/staff');
       return data.staff;
