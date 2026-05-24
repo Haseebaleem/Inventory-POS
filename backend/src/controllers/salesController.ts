@@ -265,15 +265,17 @@ export async function refundSale(req: Request, res: Response) {
 
 export async function searchProductsForPOS(req: Request, res: Response) {
   const q = (req as Request & { validatedQuery?: { q: string; limit: number } }).validatedQuery!;
+  const trimmed = q.q.trim();
+  const where: Prisma.ProductWhereInput = { active: true };
+  if (trimmed) {
+    where.OR = [
+      { name: { contains: trimmed, mode: 'insensitive' } },
+      { sku: { contains: trimmed, mode: 'insensitive' } },
+      { barcode: { contains: trimmed, mode: 'insensitive' } },
+    ];
+  }
   const products = await prisma.product.findMany({
-    where: {
-      active: true,
-      OR: [
-        { name: { contains: q.q, mode: 'insensitive' } },
-        { sku: { contains: q.q, mode: 'insensitive' } },
-        { barcode: { contains: q.q, mode: 'insensitive' } },
-      ],
-    },
+    where,
     take: q.limit,
     orderBy: { name: 'asc' },
     select: {

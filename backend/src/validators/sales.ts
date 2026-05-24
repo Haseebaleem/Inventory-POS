@@ -15,6 +15,6 @@ export const refundSchema = z.object({
 });
 
 export const productSearchQuery = z.object({
-  q: z.string().min(1),
+  q: z.string().default(''),
   limit: z.coerce.number().int().positive().max(50).default(20),
 });
