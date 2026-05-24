@@ -11,6 +11,7 @@ import BusinessPage from '@/pages/BusinessPage';
 import ProductsPage from '@/pages/ProductsPage';
 import ProductNewPage from '@/pages/ProductNewPage';
 import ProductDetailPage from '@/pages/ProductDetailPage';
+import AuditLogsPage from '@/pages/AuditLogsPage';
 import TopProgressBar from '@/components/TopProgressBar';
 import SplashScreen from '@/components/SplashScreen';
 import { useAuthBootstrap } from '@/hooks/useAuthBootstrap';
@@ -101,7 +102,7 @@ export default function App() {
               path="/audit-logs"
               element={
                 <RequireAuth roles={['OWNER']}>
-                  <PlaceholderPage title="Audit Logs" />
+                  <AuditLogsPage />
                 </RequireAuth>
               }
             />
