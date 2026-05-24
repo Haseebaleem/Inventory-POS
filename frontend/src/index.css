@@ -34,3 +34,43 @@
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 }
+
+/* Print: 80mm thermal receipt — strip everything except the receipt */
+@media print {
+  @page {
+    size: 80mm auto;
+    margin: 0;
+  }
+  body {
+    background: white !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .receipt,
+  .receipt * {
+    visibility: visible;
+  }
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+  .receipt {
+    position: fixed !important;
+    inset: 0;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin: 0 !important;
+    padding: 4mm !important;
+    color: black !important;
+    background: white !important;
+    font-family: ui-monospace, monospace !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .receipt-modal,
+  .receipt-modal * {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

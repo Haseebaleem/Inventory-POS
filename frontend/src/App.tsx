@@ -15,6 +15,7 @@ import ProductDetailPage from '@/pages/ProductDetailPage';
 import AuditLogsPage from '@/pages/AuditLogsPage';
 import SalesPage from '@/pages/SalesPage';
 import SaleDetailPage from '@/pages/SaleDetailPage';
+import PosPage from '@/pages/PosPage';
 import TopProgressBar from '@/components/TopProgressBar';
 import SplashScreen from '@/components/SplashScreen';
 import { useAuthBootstrap } from '@/hooks/useAuthBootstrap';
@@ -50,7 +51,7 @@ export default function App() {
                 </RequireAuth>
               }
             />
-            <Route path="/pos" element={<PlaceholderPage title="POS Counter" />} />
+            <Route path="/pos" element={<PosPage />} />
             <Route
               path="/products"
               element={
