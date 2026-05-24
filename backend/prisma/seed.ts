@@ -121,7 +121,7 @@ async function main() {
     if (!category) continue;
     const existing = await prisma.product.findUnique({ where: { sku: sp.sku } });
     if (existing) continue;
-    const stock = randInt(5, 60);
+    const stock = randInt(2, 30);
     const p = await prisma.product.create({
       data: {
         sku: sp.sku,
