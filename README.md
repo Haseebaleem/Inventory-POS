@@ -3,8 +3,9 @@
 A single-tenant Point-of-Sale and Inventory Management system for small businesses.
 One owner, multiple cashiers, one POS counter — no marketplace, no multi-store.
 
-> **Status — Phase 1:** Backend complete (all endpoints, atomic sale + refund flow, audit
-> logging, Jest suite). Frontend has login + role-based layout. All other pages land in Phase 2.
+> **Status — Phase 2 complete.** All admin pages (dashboard, products, categories, staff,
+> business settings, audit logs, sales) and the POS counter are wired to the backend.
+> Backend Jest suite still green at 28/28.
 
 ## Stack
 
@@ -135,12 +136,41 @@ double-refund rejection), reports, staff lifecycle, and the health endpoint.
 
 28 test cases, 60+ assertions. Run as Phase 1 acceptance gate.
 
+## Frontend pages
+
+```
+/login                  public — role-based redirect on success
+/dashboard              owner — 4 stat cards + 7-day revenue line + top-5 month bar + recent sales
+/pos                    owner + cashier — debounced search, product grid, cart, tax, receipt
+/products               owner — list w/ search, category, status filters, pagination
+/products/new           owner — create form with image upload
+/products/:id           owner — details tab + stock-history tab + adjust-stock modal
+/categories             owner — inline create/edit/delete (blocked if products assigned)
+/staff                  owner — add cashier, suspend/unsuspend, delete (soft if sales exist)
+/business               owner — name, currency, tax rate, address, logo upload
+/sales                  owner sees all · cashier sees own — filterable + paginated
+/sales/:id              detail with refund button (rules per scope)
+/audit-logs             owner — paginated, action/entity filter, expandable JSON metadata
+```
+
 ## Phase plan
 
 - **Phase 1 (Day 1)** — Backend complete + tested · frontend scaffold · login + role-based layout · README. ✅
-- **Phase 2 (Day 2)** — All remaining frontend pages: dashboard, products CRUD with image upload,
-  categories, staff, business settings, POS counter (debounced search + cart + tax + receipt),
-  sales history + refund flow, audit log viewer, loading skeletons, top progress bar.
+- **Phase 2 (Day 2)** — Dashboard · products CRUD · categories · staff · business settings · POS
+  counter (debounced search + cart + tax + receipt + print + keyboard shortcuts) · sales history
+  · refund flow · audit log viewer · loading skeletons · top progress bar · error boundaries. ✅
+
+## Cross-cutting UX
+
+- **Loading**: skeletons on every list/detail page; a top progress bar reflects TanStack
+  Query fetch + mutation state with a 150ms show delay.
+- **Errors**: every page uses `RetryError` for failed queries; mutations toast the actual API
+  error code in dev (e.g. `[CONFLICT] Email already in use`).
+- **Currency**: business profile loaded once into a Zustand store at app boot — every money
+  display uses `formatCurrency(amount, currency)`. No raw numbers.
+- **Receipt printing**: `@media print` strips everything except the receipt and sizes it to 80mm
+  thermal width. The print button triggers `window.print()`.
+- **POS keyboard**: `/` focuses search · `Enter` adds first result · `Esc` clears query.
 
 ## License
 
