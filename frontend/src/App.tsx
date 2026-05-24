@@ -6,6 +6,7 @@ import { RequireAuth } from '@/components/RequireAuth';
 import RoleRedirect from '@/pages/RoleRedirect';
 import PlaceholderPage from '@/pages/PlaceholderPage';
 import CategoriesPage from '@/pages/CategoriesPage';
+import DashboardPage from '@/pages/DashboardPage';
 import StaffPage from '@/pages/StaffPage';
 import BusinessPage from '@/pages/BusinessPage';
 import ProductsPage from '@/pages/ProductsPage';
@@ -45,7 +46,7 @@ export default function App() {
               path="/dashboard"
               element={
                 <RequireAuth roles={['OWNER']}>
-                  <PlaceholderPage title="Dashboard" />
+                  <DashboardPage />
                 </RequireAuth>
               }
             />
