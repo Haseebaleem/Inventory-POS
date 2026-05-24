@@ -9,6 +9,8 @@ import CategoriesPage from '@/pages/CategoriesPage';
 import StaffPage from '@/pages/StaffPage';
 import BusinessPage from '@/pages/BusinessPage';
 import ProductsPage from '@/pages/ProductsPage';
+import ProductNewPage from '@/pages/ProductNewPage';
+import ProductDetailPage from '@/pages/ProductDetailPage';
 import TopProgressBar from '@/components/TopProgressBar';
 import SplashScreen from '@/components/SplashScreen';
 import { useAuthBootstrap } from '@/hooks/useAuthBootstrap';
@@ -57,7 +59,7 @@ export default function App() {
               path="/products/new"
               element={
                 <RequireAuth roles={['OWNER']}>
-                  <PlaceholderPage title="New Product" />
+                  <ProductNewPage />
                 </RequireAuth>
               }
             />
@@ -65,7 +67,7 @@ export default function App() {
               path="/products/:id"
               element={
                 <RequireAuth roles={['OWNER']}>
-                  <PlaceholderPage title="Product Detail" />
+                  <ProductDetailPage />
                 </RequireAuth>
               }
             />
