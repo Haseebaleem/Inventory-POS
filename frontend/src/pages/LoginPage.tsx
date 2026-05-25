@@ -11,7 +11,6 @@ import type { AuthUser } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 
 const loginSchema = z.object({
@@ -51,18 +50,31 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-2 text-center">
-          <div className="mx-auto h-12 w-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center">
+    <div className="min-h-screen bg-background text-foreground flex items-center justify-center p-4 relative overflow-hidden">
+      {/* subtle ambient glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-50"
+        style={{
+          background:
+            'radial-gradient(circle at 30% 20%, hsl(38 92% 50% / 0.10) 0%, transparent 45%), radial-gradient(circle at 70% 80%, hsl(38 92% 50% / 0.06) 0%, transparent 50%)',
+        }}
+      />
+
+      <div className="relative w-full max-w-md rounded-xl border border-border bg-card/80 backdrop-blur-sm shadow-2xl animate-slide-up">
+        <div className="px-8 pt-8 pb-2 text-center space-y-3">
+          <div className="mx-auto h-12 w-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center ring-1 ring-primary/30">
             <Store className="h-6 w-6" />
           </div>
-          <CardTitle className="text-2xl">Inventory POS</CardTitle>
-          <CardDescription>Sign in to manage your store</CardDescription>
-        </CardHeader>
-        <CardContent>
+          <div>
+            <h1 className="text-xl font-semibold tracking-tight">Inventory POS</h1>
+            <p className="text-sm text-muted-foreground mt-1">Sign in to manage your store</p>
+          </div>
+        </div>
+
+        <div className="px-8 pt-6 pb-8">
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -73,7 +85,7 @@ export default function LoginPage() {
               />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -86,7 +98,7 @@ export default function LoginPage() {
                 <p className="text-xs text-destructive">{errors.password.message}</p>
               )}
             </div>
-            <Button type="submit" className="w-full" disabled={submitting}>
+            <Button type="submit" className="w-full h-10" disabled={submitting}>
               {submitting ? (
                 <>
                   <Spinner className="mr-2" /> Signing in…
@@ -99,13 +111,22 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 rounded-md border bg-muted/30 p-3 text-xs text-muted-foreground">
-            <p className="font-medium text-foreground">Demo credentials</p>
-            <p>Owner — owner@demo.local / Owner123!</p>
-            <p>Cashier — cashier@demo.local / Cashier123!</p>
+          <div className="mt-6 rounded-lg border border-border bg-muted/30 px-4 py-3 text-xs space-y-1">
+            <p className="font-medium text-foreground flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+              Demo credentials
+            </p>
+            <p className="text-muted-foreground">
+              <span className="text-foreground/80">Owner</span> · owner@demo.local /{' '}
+              <span className="font-mono">Owner123!</span>
+            </p>
+            <p className="text-muted-foreground">
+              <span className="text-foreground/80">Cashier</span> · cashier@demo.local /{' '}
+              <span className="font-mono">Cashier123!</span>
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
