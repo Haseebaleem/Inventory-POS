@@ -11,6 +11,7 @@ import {
   LogOut,
   Store,
   ChevronDown,
+  Search,
   type LucideIcon,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/stores/authStore';
 import { useBusiness } from '@/stores/businessStore';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import toast from 'react-hot-toast';
 import type { Role } from '@/types';
 
@@ -146,40 +148,58 @@ export default function AppLayout() {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 bg-card/50 backdrop-blur-sm border-b border-border flex items-center justify-between px-6">
-          <div className="text-sm text-muted-foreground">
+        <header className="h-14 bg-card/60 backdrop-blur-sm border-b border-border flex items-center justify-between gap-4 px-6 sticky top-0 z-30">
+          <div className="text-sm text-muted-foreground hidden md:block">
             Welcome back, <span className="text-foreground font-medium">{user.name}</span>
           </div>
-          <div className="relative">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setMenuOpen((v) => !v)}
-              className="gap-2 h-9"
+
+          <div className="flex-1 max-w-md mx-auto hidden md:block">
+            <button
+              type="button"
+              onClick={() => toast('Global search coming soon', { icon: '🔍' })}
+              className="group w-full inline-flex items-center gap-2 h-9 px-3 rounded-md border border-border bg-background/60 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-all duration-200"
             >
-              <span className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-semibold ring-1 ring-primary/30">
-                {user.name.slice(0, 1).toUpperCase()}
-              </span>
-              <span className="text-sm hidden sm:inline">{user.email}</span>
-              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-            </Button>
-            {menuOpen && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
-                <div className="absolute right-0 mt-2 w-56 rounded-lg border border-border bg-popover text-popover-foreground shadow-lg z-50 overflow-hidden animate-fade-in">
-                  <div className="px-3 py-2.5 border-b border-border">
-                    <p className="text-sm font-medium truncate">{user.name}</p>
-                    <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+              <Search className="h-4 w-4" />
+              <span className="flex-1 text-left">Search…</span>
+              <kbd className="hidden lg:inline-flex items-center gap-0.5 rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
+                <span className="text-[11px]">⌘</span>K
+              </kbd>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMenuOpen((v) => !v)}
+                className="gap-2 h-9"
+              >
+                <span className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-semibold ring-1 ring-primary/30">
+                  {user.name.slice(0, 1).toUpperCase()}
+                </span>
+                <span className="text-sm hidden xl:inline">{user.email}</span>
+                <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+              </Button>
+              {menuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
+                  <div className="absolute right-0 mt-2 w-56 rounded-lg border border-border bg-popover text-popover-foreground shadow-lg z-50 overflow-hidden animate-fade-in">
+                    <div className="px-3 py-2.5 border-b border-border">
+                      <p className="text-sm font-medium truncate">{user.name}</p>
+                      <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                    </div>
+                    <button
+                      onClick={logout}
+                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left text-destructive hover:bg-destructive/10 transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" /> Sign out
+                    </button>
                   </div>
-                  <button
-                    onClick={logout}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-sm text-left text-destructive hover:bg-destructive/10 transition-colors"
-                  >
-                    <LogOut className="h-4 w-4" /> Sign out
-                  </button>
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
         </header>
         <main className="flex-1 overflow-auto p-6 lg:p-8">
