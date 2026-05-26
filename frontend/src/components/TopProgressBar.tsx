@@ -40,10 +40,15 @@ export default function TopProgressBar() {
   if (!visible && progress === 0) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[100] h-0.5 bg-transparent pointer-events-none">
+    <div
+      className="fixed top-0 left-0 right-0 z-[100] h-[3px] bg-transparent pointer-events-none"
+      role="progressbar"
+      aria-hidden={!visible}
+    >
       <div
         className={cn(
-          'h-full bg-primary transition-all duration-200 ease-out shadow-[0_0_8px_rgba(14,165,233,0.6)]',
+          'h-full bg-primary transition-[width,opacity] duration-200 ease-out',
+          'shadow-[0_0_10px_hsl(38_92%_50%/0.7)]',
           !visible && 'opacity-0'
         )}
         style={{ width: `${progress}%` }}
