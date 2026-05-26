@@ -10,6 +10,8 @@
 [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+> **Status:** Shipped and polished. UI uses emerald accent (distinct from my [TextKit](https://github.com/Haseebaleem/TextKit) and [NewsHub](https://github.com/Haseebaleem/NewsHub) which use amber) — each project has its own visual identity tied to domain. Dark mode is the default, Geist Sans/Mono fonts, categorized sidebar.
+
 ---
 
 ## 🎬 Demo
@@ -70,6 +72,9 @@ This isn't just a CRUD app — several patterns are intentional for production r
 
 ### Why `SELECT FOR UPDATE` on sale completion
 A POS system runs on a critical assumption: **stock cannot oversell**. Two cashiers ringing up the last unit of an item simultaneously would corrupt inventory without proper locking. Sale completion runs inside a transaction that row-locks each product, validates stock, decrements atomically, creates the sale + line items + stock movements, and commits — all-or-nothing. Failed validation rolls back cleanly; partial sales don't exist.
+
+### Why atomic sale completion combines row-level locking and advisory transaction locks
+Sale completion runs inside a transaction that locks each product row via `SELECT ... FOR UPDATE`, validates stock, decrements atomically, and creates the Sale + SaleItem + StockMovement rows. But generating the daily sale number (`S-YYYYMMDD-NNNNN`) requires a separate guarantee — two cashiers ringing up simultaneously must get different sequential numbers, not duplicates. A row lock on Products doesn't help here because the contention is on a counter, not a row. The pattern: `pg_advisory_xact_lock(YYYYMMDD::int8)` at the start of the transaction, scoped to the current day. Released automatically on commit or rollback. This serializes sale-number generation across cashiers without locking unrelated rows or requiring SERIALIZABLE isolation level. The combination — row locks for stock, advisory lock for sale number — is precise about what's actually contended.
 
 ### Why snapshot product name and price in `SaleItem`
 Receipts and historical reports must remain accurate even after products are deleted or repriced. `SaleItem.productName` and `productPrice` are denormalized at sale time. Reprinting a 6-month-old receipt shows the price the customer actually paid, not the current price. Same pattern used in production systems like Shopify and Square.
@@ -427,7 +432,7 @@ Features for transitioning this from portfolio to commercial product:
 - [ ] Demo GIF recording showing POS workflow
 - [ ] Mobile-responsive cashier mode for tablet POS
 - [ ] Keyboard shortcut overlay (press `?` to view)
-- [ ] Dark mode
+- [ ] PWA installability with offline cache for the POS counter
 
 This codebase is structured to support these extensions — domain models are clean, transactions are atomic, the audit log captures everything, and the API is REST-versioned (`/api/v1`) ready for v2 migrations.
 
