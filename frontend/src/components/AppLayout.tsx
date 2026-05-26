@@ -77,9 +77,9 @@ export default function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex">
-      <aside className="w-60 shrink-0 bg-card border-r border-border flex flex-col">
-        <div className="px-4 py-4 border-b border-border flex items-center gap-2.5">
+    <div className="h-screen overflow-hidden bg-background text-foreground flex">
+      <aside className="w-60 shrink-0 bg-card border-r border-border flex flex-col h-full">
+        <div className="px-4 py-4 border-b border-border flex items-center gap-2.5 shrink-0">
           <div className="h-9 w-9 rounded-lg bg-primary/15 text-primary flex items-center justify-center ring-1 ring-primary/25">
             <Store className="h-4.5 w-4.5" strokeWidth={2} />
           </div>
@@ -93,7 +93,7 @@ export default function AppLayout() {
           </div>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto">
+        <nav className="flex-1 min-h-0 px-3 py-4 space-y-5 overflow-y-auto">
           {navSections.map((section) => {
             const visible = section.items.filter((i) => i.roles.includes(role));
             if (visible.length === 0) return null;
@@ -142,13 +142,13 @@ export default function AppLayout() {
           })}
         </nav>
 
-        <div className="px-4 py-3 border-t border-border text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
+        <div className="px-4 py-3 border-t border-border text-[10px] text-muted-foreground font-mono uppercase tracking-wider shrink-0">
           v1.0
         </div>
       </aside>
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 bg-card/60 backdrop-blur-sm border-b border-border flex items-center justify-between gap-4 px-6 sticky top-0 z-30">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        <header className="h-14 shrink-0 bg-card/60 backdrop-blur-sm border-b border-border flex items-center justify-between gap-4 px-6 z-30">
           <div className="text-sm text-muted-foreground hidden md:block">
             Welcome back, <span className="text-foreground font-medium">{user.name}</span>
           </div>
@@ -202,7 +202,7 @@ export default function AppLayout() {
             </div>
           </div>
         </header>
-        <main className="flex-1 overflow-auto p-6 lg:p-8">
+        <main className="flex-1 min-h-0 overflow-y-auto p-6 lg:p-8">
           <Outlet />
         </main>
       </div>
