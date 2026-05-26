@@ -10,6 +10,7 @@ import {
   CreditCard,
   Banknote,
   PackageX,
+  CheckCircle2,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
@@ -400,9 +401,21 @@ export default function PosPage() {
           if (!v) setReceiptSale(null);
         }}
       >
-        <DialogContent className="max-w-sm receipt-modal">
-          <DialogHeader>
-            <DialogTitle>Sale complete</DialogTitle>
+        <DialogContent className="max-w-sm receipt-modal border-t-2 border-t-primary">
+          <DialogHeader className="no-print">
+            <div className="flex items-center gap-2.5">
+              <div className="h-9 w-9 rounded-full bg-primary/15 text-primary flex items-center justify-center ring-1 ring-primary/30">
+                <CheckCircle2 className="h-5 w-5" strokeWidth={2} />
+              </div>
+              <div className="text-left">
+                <DialogTitle>Sale complete</DialogTitle>
+                {receiptSale && (
+                  <p className="text-xs text-muted-foreground font-mono mt-0.5">
+                    {receiptSale.saleNumber}
+                  </p>
+                )}
+              </div>
+            </div>
           </DialogHeader>
           {receiptSale && (
             <>
