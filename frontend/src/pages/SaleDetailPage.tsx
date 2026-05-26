@@ -9,7 +9,6 @@ import { PageHeader } from '@/components/common/PageHeader';
 import { RetryError } from '@/components/common/RetryError';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Dialog,
@@ -141,67 +140,74 @@ export default function SaleDetailPage() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-base">Items</CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Product</TableHead>
-                  <TableHead className="text-right">Qty</TableHead>
-                  <TableHead className="text-right">Unit Price</TableHead>
-                  <TableHead className="text-right">Line Total</TableHead>
+        <div className="lg:col-span-2 rounded-xl border border-border bg-card overflow-hidden">
+          <div className="px-5 py-3.5 border-b border-border">
+            <h2 className="text-sm font-semibold">Items</h2>
+          </div>
+          <Table>
+            <TableHeader>
+              <TableRow className="hover:bg-transparent">
+                <TableHead>Product</TableHead>
+                <TableHead className="text-right">Qty</TableHead>
+                <TableHead className="text-right">Unit Price</TableHead>
+                <TableHead className="text-right">Line Total</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.items.map((it) => (
+                <TableRow key={it.id}>
+                  <TableCell className="font-medium">{it.productName}</TableCell>
+                  <TableCell className="text-right tabular-nums">{it.quantity}</TableCell>
+                  <TableCell className="text-right tabular-nums text-muted-foreground">
+                    {formatCurrency(it.productPrice, currency)}
+                  </TableCell>
+                  <TableCell className="text-right font-semibold tabular-nums">
+                    {formatCurrency(it.lineTotal, currency)}
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.items.map((it) => (
-                  <TableRow key={it.id}>
-                    <TableCell className="font-medium">{it.productName}</TableCell>
-                    <TableCell className="text-right">{it.quantity}</TableCell>
-                    <TableCell className="text-right">
-                      {formatCurrency(it.productPrice, currency)}
-                    </TableCell>
-                    <TableCell className="text-right font-medium">
-                      {formatCurrency(it.lineTotal, currency)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Totals</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
+        <div className="rounded-xl border border-border bg-card overflow-hidden self-start">
+          <div className="px-5 py-3.5 border-b border-border">
+            <h2 className="text-sm font-semibold">Totals</h2>
+          </div>
+          <div className="p-5 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Subtotal</span>
-              <span className="font-medium">{formatCurrency(data.subtotal, currency)}</span>
+              <span className="font-medium tabular-nums">
+                {formatCurrency(data.subtotal, currency)}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Tax</span>
-              <span className="font-medium">{formatCurrency(data.taxAmount, currency)}</span>
+              <span className="font-medium tabular-nums">
+                {formatCurrency(data.taxAmount, currency)}
+              </span>
             </div>
-            <div className="border-t pt-2 flex justify-between text-base">
+            <div className="border-t border-border pt-3 mt-2 flex justify-between text-base">
               <span className="font-semibold">Total</span>
-              <span className="font-semibold">{formatCurrency(data.total, currency)}</span>
+              <span className="font-semibold tabular-nums text-primary">
+                {formatCurrency(data.total, currency)}
+              </span>
             </div>
             {data.status === 'REFUNDED' && (
-              <div className="mt-4 pt-4 border-t space-y-1 text-xs">
-                <p className="text-muted-foreground">Refunded {formatDate(data.refundedAt, 'long')}</p>
+              <div className="mt-4 pt-4 border-t border-border space-y-2 text-xs">
+                <p className="text-muted-foreground">
+                  Refunded {formatDate(data.refundedAt, 'long')}
+                </p>
                 {data.refundReason && (
-                  <p className="bg-destructive/10 text-destructive p-2 rounded-md">
-                    Reason: {data.refundReason}
-                  </p>
+                  <div className="bg-destructive/10 text-destructive border border-destructive/20 p-3 rounded-md">
+                    <p className="font-medium uppercase tracking-wide text-[10px] mb-1">Reason</p>
+                    <p>{data.refundReason}</p>
+                  </div>
                 )}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <Dialog open={refundOpen} onOpenChange={setRefundOpen}>

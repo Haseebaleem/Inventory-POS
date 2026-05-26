@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Receipt, X } from 'lucide-react';
+import { Receipt, ShoppingCart, X } from 'lucide-react';
 import { PageHeader } from '@/components/common/PageHeader';
 import { EmptyState } from '@/components/common/EmptyState';
 import { RetryError } from '@/components/common/RetryError';
@@ -180,19 +180,34 @@ export default function SalesPage() {
       ) : sales.length === 0 ? (
         <EmptyState
           icon={Receipt}
-          title={hasFilters ? 'No sales match these filters' : 'No sales yet'}
+          title={hasFilters ? 'No sales match these filters' : 'No sales recorded yet'}
           description={
             hasFilters
               ? 'Try clearing filters or widening the date range.'
-              : 'Open POS Counter to start selling.'
+              : 'Sales will appear here once you make your first transaction.'
+          }
+          action={
+            hasFilters ? (
+              <Button variant="outline" onClick={reset}>
+                <X className="h-4 w-4 mr-1" /> Reset filters
+              </Button>
+            ) : (
+              <Button onClick={() => navigate('/pos')}>
+                <ShoppingCart className="h-4 w-4 mr-2" /> Open POS Counter
+              </Button>
+            )
           }
         />
       ) : (
         <>
-          <div className={`border rounded-lg overflow-hidden bg-card ${isFetching ? 'opacity-90' : ''}`}>
+          <div
+            className={`rounded-xl border border-border bg-card overflow-hidden transition-opacity ${
+              isFetching ? 'opacity-90' : ''
+            }`}
+          >
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Sale #</TableHead>
                   <TableHead>When</TableHead>
                   <TableHead>Cashier</TableHead>
@@ -214,8 +229,8 @@ export default function SalesPage() {
                       {formatDate(s.createdAt, 'long')}
                     </TableCell>
                     <TableCell>{s.cashier?.name ?? '—'}</TableCell>
-                    <TableCell className="text-right">{s.items.length}</TableCell>
-                    <TableCell className="text-right font-medium">
+                    <TableCell className="text-right tabular-nums">{s.items.length}</TableCell>
+                    <TableCell className="text-right font-semibold tabular-nums">
                       {formatCurrency(s.total, currency)}
                     </TableCell>
                     <TableCell>
