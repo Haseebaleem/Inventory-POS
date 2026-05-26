@@ -122,10 +122,10 @@ export default function StaffPage() {
           }
         />
       ) : (
-        <div className="border rounded-lg overflow-hidden bg-card">
+        <div className="rounded-xl border border-border bg-card overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="hover:bg-transparent">
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Status</TableHead>
@@ -136,7 +136,14 @@ export default function StaffPage() {
             <TableBody>
               {data.map((s) => (
                 <TableRow key={s.id}>
-                  <TableCell className="font-medium">{s.name}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-semibold ring-1 ring-primary/25 shrink-0">
+                        {s.name.slice(0, 1).toUpperCase()}
+                      </div>
+                      <span className="font-medium">{s.name}</span>
+                    </div>
+                  </TableCell>
                   <TableCell className="text-muted-foreground">{s.email}</TableCell>
                   <TableCell>
                     {s.suspended ? (
@@ -145,7 +152,7 @@ export default function StaffPage() {
                       <Badge variant="success">Active</Badge>
                     )}
                   </TableCell>
-                  <TableCell className="text-muted-foreground">
+                  <TableCell className="text-muted-foreground text-sm">
                     {formatDate(s.createdAt, 'short')}
                   </TableCell>
                   <TableCell className="text-right">
@@ -158,9 +165,9 @@ export default function StaffPage() {
                         title={s.suspended ? 'Unsuspend' : 'Suspend'}
                       >
                         {s.suspended ? (
-                          <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                          <ShieldCheck className="h-4 w-4 text-emerald-500" />
                         ) : (
-                          <ShieldOff className="h-4 w-4 text-amber-600" />
+                          <ShieldOff className="h-4 w-4 text-amber-500" />
                         )}
                       </Button>
                       <Button

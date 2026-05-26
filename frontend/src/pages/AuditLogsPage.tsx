@@ -90,10 +90,14 @@ export default function AuditLogsPage() {
         />
       ) : (
         <>
-          <div className={`border rounded-lg overflow-hidden bg-card ${isFetching ? 'opacity-90' : ''}`}>
+          <div
+            className={`rounded-xl border border-border bg-card overflow-hidden transition-opacity ${
+              isFetching ? 'opacity-90' : ''
+            }`}
+          >
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead className="w-[40px]"></TableHead>
                   <TableHead>When</TableHead>
                   <TableHead>User</TableHead>

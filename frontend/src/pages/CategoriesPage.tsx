@@ -125,10 +125,10 @@ export default function CategoriesPage() {
           }
         />
       ) : (
-        <div className="border rounded-lg overflow-hidden bg-card">
+        <div className="rounded-xl border border-border bg-card overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="hover:bg-transparent">
                 <TableHead>Name</TableHead>
                 <TableHead>Slug</TableHead>
                 <TableHead className="text-right">Products</TableHead>
