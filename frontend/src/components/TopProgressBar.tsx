@@ -48,7 +48,7 @@ export default function TopProgressBar() {
       <div
         className={cn(
           'h-full bg-primary transition-[width,opacity] duration-200 ease-out',
-          'shadow-[0_0_10px_hsl(38_92%_50%/0.7)]',
+          'shadow-[0_0_10px_hsl(160_84%_39%/0.7)]',
           !visible && 'opacity-0'
         )}
         style={{ width: `${progress}%` }}
