@@ -14,7 +14,7 @@
 
 ## 🎯 About
 
-Inventory-POS is a production-grade point-of-sale and inventory management system designed for small businesses — retail shops, kirana stores, restaurants, electronics shops. It handles the core operational realities of a real retail counter: multiple cashiers ringing up simultaneous transactions without overselling stock, sequential daily sale numbers for tax reconciliation, atomic stock movements with reason codes, refunds that restore inventory, and a complete audit trail capturing every action with the actor's IP. The frontend uses an emerald accent (distinct visual identity tied to the money/transactions domain), dark mode default, Geist Sans/Mono typography, and a categorized sidebar — designed to feel like a real cashier tool, not a generic admin panel.
+Inventory-POS is a portfolio point-of-sale and inventory management system for small businesses (retail shops, kirana stores, restaurants, electronics shops), built to practice production-style concurrency handling. It handles the core operational realities of a real retail counter: multiple cashiers ringing up simultaneous transactions without overselling stock, sequential daily sale numbers for tax reconciliation, atomic stock movements with reason codes, refunds that restore inventory, and a complete audit trail capturing every action with the actor's IP. The frontend uses an emerald accent (distinct visual identity tied to the money/transactions domain), dark mode default, Geist Sans/Mono typography, and a categorized sidebar — designed to feel like a real cashier tool, not a generic admin panel.
 
 This isn't a tutorial-grade POS — it's built with the concurrency safety, audit discipline, and operational realism that distinguish business tools from CRUD demos.
 
@@ -77,7 +77,7 @@ A POS system runs on a critical assumption: stock cannot oversell. Two cashiers 
 
 ### Why snapshot product name and price in SaleItem
 
-Receipts and historical reports must remain accurate even after products are deleted or repriced. `SaleItem.productName` and `productPrice` are denormalized at sale time. Reprinting a 6-month-old receipt shows the price the customer actually paid, not the current price. Same pattern used in production systems like Shopify, Stripe, and Square.
+Receipts and historical reports must remain accurate even after products are deleted or repriced. `SaleItem.productName` and `productPrice` are denormalized at sale time. Reprinting a 6-month-old receipt shows the price the customer actually paid, not the current price.
 
 ### Why no public registration
 
@@ -101,7 +101,7 @@ Sequential numbers within a day are required by some tax authorities and make re
 
 ### Why emerald accent instead of default
 
-Each project in my portfolio has a distinct color identity tied to its domain — POS uses emerald because the domain is money and transaction success. Stripe, Square, and Foodics use green-tones for transaction success states; the convention has psychological weight. The "Complete Sale" button in emerald subtly encourages the cashier action (green = go). Color isn't decoration, it's communication.
+Each project in my portfolio has a distinct color identity tied to its domain — POS uses emerald because the domain is money and transaction success. Green is a common convention for transaction success states; the convention has psychological weight. The "Complete Sale" button in emerald subtly encourages the cashier action (green = go). Color isn't decoration, it's communication.
 
 ---
 
@@ -367,7 +367,7 @@ cd backend
 npm test
 ```
 
-**Coverage:** 28 test cases with 60+ assertions, all passing.
+**Tests:** 28 test cases with 60+ assertions, all passing.
 
 ---
 
@@ -415,7 +415,7 @@ Senior Full Stack Developer & Team Lead
 - 💼 **LinkedIn:** [linkedin.com/in/haseeb-aleem-dev](https://www.linkedin.com/in/haseeb-aleem-dev/)
 - 💻 **GitHub:** [github.com/Haseebaleem](https://github.com/Haseebaleem)
 - 📧 **Email:** haseebaleem2802@gmail.com
-- 📍 **Location:** Multan, Pakistan (Open to Saudi Arabia & GCC relocation)
+- 📍 **Location:** Riyadh, Saudi Arabia
 
 ---
 
